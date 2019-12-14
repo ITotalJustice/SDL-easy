@@ -1,17 +1,35 @@
 #include <SDL_easy.h>
 #include <switch.h>
 
-#define MAX_POINTS      9
-#define MOVE_DISTANCE   5
-#define MAX_UPPER_Y     70
-#define MAX_LOWER_Y     (SCREEN_H - (70 * 2))
+
+#define MAX_POINTS              9
+#define PLAYER_MOVE_DISTANCE    5
+#define BALL_MOVE_DISTANCE      5
+
+#define MAX_UPPER_Y             70
+#define MAX_LOWER_Y             (SCREEN_H - (70 * 2))
 #define DEV_MODE
+
+#define BALL_SPEED_MAX          10
+#define BALL_SPEED_MIN          2
+
 
 typedef struct
 {
     uint64_t down;
     uint64_t held;
 } input_t;
+
+typedef struct
+{
+    int prev_pos_x;
+    int prev_pos_y;
+    int new_pos_x;
+    int new_pos_y;
+
+    int vol_x;
+    int vol_y;
+} speed_t;
 
 typedef struct
 {
@@ -28,13 +46,19 @@ typedef struct
     int y;
     int r;
     uint8_t colour;
-} ball_t;
+} circle_t;
 
 typedef struct
 {
     shape_t shape;
     uint8_t score;
 } player_t;
+
+typedef struct
+{
+    circle_t circle;
+    speed_t speed;
+} ball_t;
 
 player_t player1;
 player_t player2;
@@ -48,34 +72,42 @@ void poll_input(input_t *k)
     k->held = hidKeysHeld(CONTROLLER_P1_AUTO);
 }
 
+shape_t SDL_CreateShape(uint8_t colour, int x, int y, int w, int h)
+{
+    shape_t shape = { x, y, w, h, colour };
+    return shape;
+}
+
+circle_t SDL_CreateCircle(uint8_t colour, int x, int y, int r)
+{
+    circle_t circle = { x, y, r, colour };
+    return circle;
+}
+
+void setup_speed(void)
+{
+    ball.speed.vol_x = BALL_MOVE_DISTANCE;
+    ball.speed.vol_y = BALL_MOVE_DISTANCE;
+}
+
 void setup_ball(void)
 {
-    ball.x = 300;           // will randomise whose side the ball spawns on later.
-    ball.y = SCREEN_H / 2;  // needs to be slighly more up.
-    ball.r = 25;
-    ball.colour = Colour_Nintendo_Cyan;
+    ball.circle = SDL_CreateCircle(Colour_Nintendo_Cyan, 300, SCREEN_H / 2, 25);
+    setup_speed();
 }
 
 void setup_players(void)
 {
-    player1.shape.x = 80;
-    player1.shape.y = SCREEN_H / 2; // will be a bit less after.
-    player1.shape.w = 10;
-    player1.shape.h = 50;
-    player1.shape.colour = Colour_Nintendo_White;
+    player1.shape = SDL_CreateShape(Colour_Nintendo_White, 80, SCREEN_H / 2, 10, 50);
     player1.score = 0;
 
-    player2.shape.x = SCREEN_W - 80;
-    player2.shape.y = SCREEN_H / 2; // will be a bit less after.
-    player2.shape.w = 10;
-    player2.shape.h = 50;
-    player2.shape.colour = Colour_Nintendo_White;
+    player2.shape = SDL_CreateShape(Colour_Nintendo_White, SCREEN_W - 80, SCREEN_H / 2, 10, 50);
     player2.score = 0;
 }
 
 void render_ball(void)
 {
-    SDL_DrawCircle(ball.colour, ball.x, ball.y, ball.r);
+    SDL_DrawCircle(ball.circle.colour, ball.circle.x, ball.circle.y, ball.circle.r);
 }
 
 void render_players(void)
@@ -86,7 +118,7 @@ void render_players(void)
     #ifdef DEV_MODE
     {
         SDL_DrawText(fntSmall, 70, SCREEN_H - 35, Colour_Nintendo_Grey, "p1: x %d, y %d.                p2: x %d, y %d.                ball: x %d, y %d, r %d",
-                    player1.shape.x, player1.shape.y, player2.shape.x, player2.shape.y, ball.x, ball.y, ball.r);
+                    player1.shape.x, player1.shape.y, player2.shape.x, player2.shape.y, ball.circle.x, ball.circle.y, ball.circle.r);
     }
     #endif
 }
@@ -116,12 +148,40 @@ void render_game(void)
 
 void move_player_down(player_t *p)
 {
-    p->shape.y = p->shape.y + MOVE_DISTANCE > MAX_LOWER_Y ? MAX_LOWER_Y : p->shape.y + MOVE_DISTANCE;
+    p->shape.y = p->shape.y + PLAYER_MOVE_DISTANCE > MAX_LOWER_Y ? MAX_LOWER_Y : p->shape.y + PLAYER_MOVE_DISTANCE;
 }
 
 void move_player_up(player_t *p)
 {
-    p->shape.y = p->shape.y - MOVE_DISTANCE < MAX_UPPER_Y ? MAX_UPPER_Y : p->shape.y - MOVE_DISTANCE;
+    p->shape.y = p->shape.y - PLAYER_MOVE_DISTANCE < MAX_UPPER_Y ? MAX_UPPER_Y : p->shape.y - PLAYER_MOVE_DISTANCE;
+}
+
+void update_ball_position(void)
+{
+    ball.circle.x += ball.speed.vol_x;
+    ball.circle.y += ball.speed.vol_y;
+
+    if (ball.circle.x + 25 > SCREEN_W)
+    {
+        ball.circle.x = SCREEN_W - 25;
+        ball.speed.vol_x = -BALL_MOVE_DISTANCE;
+    }
+    if (ball.circle.x < 0)
+    {
+        ball.circle.x = 0;
+        ball.speed.vol_x = BALL_MOVE_DISTANCE;
+    }
+
+    if (ball.circle.y + 25 > 720 - 70)
+    {
+        ball.circle.y = 720 - 70 - 25;
+        ball.speed.vol_y = -BALL_MOVE_DISTANCE;
+    }
+    if (ball.circle.y < MAX_UPPER_Y)
+    {
+        ball.circle.y = MAX_UPPER_Y;
+        ball.speed.vol_y = BALL_MOVE_DISTANCE;
+    }
 }
 
 void main_game_loop(void)
@@ -154,10 +214,11 @@ void main_game_loop(void)
         }
         #endif
 
+        update_ball_position();
+
         render_game();
 
         // todo:
-        // update ball position.
         // check if player scored.
         // update score.
         // check score against score max.
