@@ -161,26 +161,33 @@ void update_ball_position(void)
     ball.circle.x += ball.speed.vol_x;
     ball.circle.y += ball.speed.vol_y;
 
+    if (ball.circle.x <= 0)
+        player2.score++;
     if (ball.circle.x + 25 > SCREEN_W)
+        player1.score++;
+
+    if (ball.circle.y >= player1.shape.y && ball.circle.y + 25 < player1.shape.y + player1.shape.h && ball.circle.x <= player1.shape.x + player1.shape.w)
     {
-        ball.circle.x = SCREEN_W - 25;
+        ball.circle.x = player1.shape.x + player1.shape.w;
+        ball.speed.vol_x = BALL_MOVE_DISTANCE;
+    }
+
+    if (ball.circle.y >= player2.shape.y && ball.circle.y + 25 < player2.shape.y + player2.shape.h && ball.circle.x + 25 >= player2.shape.x)
+    {
+        ball.circle.x = player2.shape.x - 25;
         ball.speed.vol_x = -BALL_MOVE_DISTANCE;
     }
-    if (ball.circle.x < 0)
+
+    if (ball.circle.y <= MAX_UPPER_Y)
     {
-        ball.circle.x = 0;
-        ball.speed.vol_x = BALL_MOVE_DISTANCE;
+        ball.circle.y = MAX_UPPER_Y;
+        ball.speed.vol_y = BALL_MOVE_DISTANCE;
     }
 
     if (ball.circle.y + 25 > 720 - 70)
     {
         ball.circle.y = 720 - 70 - 25;
         ball.speed.vol_y = -BALL_MOVE_DISTANCE;
-    }
-    if (ball.circle.y < MAX_UPPER_Y)
-    {
-        ball.circle.y = MAX_UPPER_Y;
-        ball.speed.vol_y = BALL_MOVE_DISTANCE;
     }
 }
 
