@@ -97,10 +97,17 @@ void SDL_DrawImage(SDL_Texture *texture, int x, int y);                         
 void SDL_DrawImageRotate(SDL_Texture *texture, int x, int y, double rotate);
 void SDL_DrawImageScale(SDL_Texture *texture, int x, int y, int w, int h);              //scale the image drawn to screen
 void SDL_DrawShape(Colour colour, int x, int y, int w, int h);                          //draw shap (rect)
+void SDL_DrawShapeOutline(Colour colour, int x, int y, int w, int h);
+void SDL_DrawShapeRounded(Colour colour, int x, int y, int w, int h, int r);
+void SDL_DrawShapeRoundedOutline(Colour colour, int x, int y, int w, int h, int r);
 void SDL_DrawCircle(Colour colour, int x, int y, int r);
+void SDL_DrawCircleOutline(Colour colour, int x, int y, int r);
 
 void SDL_ScreenShot(SDL_Texture **texture);
 void SDL_ScreenShotSave(SDL_Texture **texture, const char *save_path);
+
+int SDL_GetTextureWidth(SDL_Texture *texture);
+int SDL_GetTextureHight(SDL_Texture *texture);
 
 void SDL_LoadFonts(void);                                                               //load all fonts
 void SDL_CloseFonts(void);                                                              //close all loaded fonts

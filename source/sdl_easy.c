@@ -8,6 +8,7 @@
 */
 
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL2_gfxPrimitives.h>
 #include <stdint.h>
 #include <stdarg.h>
 #include <switch.h>
@@ -149,12 +150,34 @@ void SDL_DrawShape(Colour colour, int x, int y, int w, int h)
     SDL_RenderFillRect(main_renderer, &pos);
 }
 
+void SDL_DrawShapeOutline(Colour colour, int x, int y, int w, int h)
+{
+    SDL_Colour col = SDL_GetColour(colour);
+    rectangleRGBA(main_renderer, x, y,x + w, y + h, col.r, col.g, col.b, 255);
+}
+
+void SDL_DrawShapeRounded(Colour colour, int x, int y, int w, int h, int r)
+{
+    SDL_Colour col = SDL_GetColour(colour);
+    roundedBoxRGBA(main_renderer, x, y,x + w, y + h, r, col.r, col.g, col.b, 255);
+}
+
+void SDL_DrawShapeRoundedOutline(Colour colour, int x, int y, int w, int h, int r)
+{
+    SDL_Colour col = SDL_GetColour(colour);
+    roundedRectangleRGBA(main_renderer, x, y,x + w, y + h, r, col.r, col.g, col.b, 255);
+}
+
 void SDL_DrawCircle(Colour colour, int x, int y, int r)
 {
     SDL_Colour col = SDL_GetColour(colour);
-    SDL_SetRenderDrawColor(main_renderer, col.r, col.g, col.b, col.a);
+    filledCircleRGBA(main_renderer, x, y, r, col.r, col.g, col.b, 255);
+}
 
-    //TODO//
+void SDL_DrawCircleOutline(Colour colour, int x, int y, int r)
+{
+    SDL_Colour col = SDL_GetColour(colour);
+    circleRGBA(main_renderer, x, y, r, col.r, col.g, col.b, 255);
 }
 
 void SDL_ScreenShot(SDL_Texture **texture)
@@ -172,6 +195,20 @@ void SDL_ScreenShotSave(SDL_Texture **texture, const char *save_path)
     SDL_RenderReadPixels(main_renderer, NULL, SDL_PIXELFORMAT_ARGB8888, Surface->pixels, Surface->pitch);
     SDL_SaveBMP(Surface, save_path);
 	SDL_FreeSurface(Surface);
+}
+
+int SDL_GetTextureWidth(SDL_Texture *texture)
+{
+    int w;
+    SDL_QueryTexture(texture, NULL, NULL, &w, NULL);
+    return w;
+}
+
+int SDL_GetTextureHight(SDL_Texture *texture)
+{
+    int h;
+    SDL_QueryTexture(texture, NULL, NULL, NULL, &h);
+    return h;
 }
 
 void SDL_LoadFonts()
@@ -200,7 +237,7 @@ void SDL_CloseFonts(void)
 
 void SDL_LoadTextures(void)
 {
-    //SDL_ImageLoad(&background, "romfs:/example.png");
+    //SDL_ImageLoad(&example, "romfs:/example.jpg");
 }
 
 void SDL_DestroyTextures(void)

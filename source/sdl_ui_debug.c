@@ -47,24 +47,26 @@ uint8_t ui_debug_previous_colour(uint8_t colour)
 * Increase Shape Size.
 */
 
+#define SHAPE_INCREASE  3
+
 int ui_debug_shape_increase_x(ui_debug_shape_t *shape)
 {
-    return shape->x + 5 > SCREEN_W ? 0 : shape->x + 5;
+    return shape->x + SHAPE_INCREASE > SCREEN_W ? 0 - shape->w : shape->x + SHAPE_INCREASE;
 }
 
 int ui_debug_shape_increase_y(ui_debug_shape_t *shape)
 {
-    return shape->y + 5 > SCREEN_H ? 0 : shape->y + 5;
+    return shape->y + SHAPE_INCREASE > SCREEN_H ? 0 - shape->h : shape->y + SHAPE_INCREASE;
 }
 
 int ui_debug_shape_increase_w(ui_debug_shape_t *shape)
 {
-    return shape->w + shape->x + 5 > SCREEN_W ? shape->w : shape->w + 5;
+    return shape->w + shape->x + SHAPE_INCREASE > SCREEN_W ? shape->w : shape->w + SHAPE_INCREASE;
 }
 
 int ui_debug_shape_increase_h(ui_debug_shape_t *shape)
 {
-    return shape->y + shape->h + 5 > SCREEN_H ? shape->h: shape->h + 5;
+    return shape->y + shape->h + SHAPE_INCREASE > SCREEN_H ? shape->h: shape->h + SHAPE_INCREASE;
 }
 
 
@@ -73,24 +75,26 @@ int ui_debug_shape_increase_h(ui_debug_shape_t *shape)
 * Decrease Shape Size.
 */
 
+#define SHAPE_DECREASE  3
+
 int ui_debug_shape_decrease_x(ui_debug_shape_t *shape)
 {
-    return shape->x < 5 ? 0 : shape->x - 5;
+    return shape->w + shape->x < SHAPE_DECREASE ? SCREEN_W : shape->x - SHAPE_DECREASE;
 }
 
 int ui_debug_shape_decrease_y(ui_debug_shape_t *shape)
 {
-    return shape->y < 5 ? SCREEN_H : shape->y - 5;
+    return shape->h + shape->y < SHAPE_DECREASE ? SCREEN_H : shape->y - SHAPE_DECREASE;
 }
 
 int ui_debug_shape_decrease_w(ui_debug_shape_t *shape)
 {
-    return shape->x -shape->w < SCREEN_W * -1 ? shape->w : shape->w - 5;
+    return shape->x - shape->w < SCREEN_W * -1 ? shape->w : shape->w - SHAPE_DECREASE;
 }
 
 int ui_debug_shape_decrease_h(ui_debug_shape_t *shape)
 {
-    return shape->y - shape->h < SCREEN_H * -1 ? shape->h : shape->h - 5;
+    return shape->y - shape->h < SCREEN_H * -1 ? shape->h : shape->h - SHAPE_DECREASE;
 }
 
 
@@ -158,7 +162,6 @@ void ui_debug_render_shape(ui_debug_shape_t *shape)
         SDL_DrawShape(shape->colour, 0, 0, w_remainder, h_renainder);
 
     SDL_DrawShape(shape->colour, shape->x, shape->y, shape->w, shape->h);
-
     SDL_UpdateRenderer();
 }
 

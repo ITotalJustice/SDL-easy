@@ -3,13 +3,17 @@
 #include "sdl_ui_debug.h"
 
 
+//#define ROMFS_LOAD
+
+
 void app_init()
 {
     // shared fonts.
     if (R_FAILED(plInitialize()))   fatalThrow(0xE0E0);
 
-    // for loading textures.
-    //if (R_FAILED(romfsInit()))      fatalThrow(0xE0E1);
+    #ifdef ROMFS_LOAD
+    if (R_FAILED(romfsInit()))      fatalThrow(0xE0E1);
+    #endif
     
     SDL_EasyInit();
 }
@@ -17,7 +21,9 @@ void app_init()
 void app_exit()
 {
     plExit();
-    //romfsExit();
+    #ifdef ROMFS_LOAD
+    romfsExit();
+    #endif
     SDL_EasyExit();
 }
 
@@ -25,7 +31,6 @@ int main(int argc, char *argv[])
 {
     app_init();
 
-    // enter shape edit mode.
     ui_debug_shape_edit();
 
     app_exit();
