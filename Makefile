@@ -38,7 +38,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 #   NACP building is skipped as well.
 #---------------------------------------------------------------------------------
 
-TARGET		:=	sdl_easy
+TARGET		:=	SDL_easy
 BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
@@ -125,6 +125,9 @@ clean:
 	@rm -fr $(CURDIR)/out
 	@rm -fr $(BUILD) $(OUTPUT).a
 
+#---------------------------------------------------------------------------------
+install:
+	cp -R out/* $(PORTLIBS)
 #---------------------------------------------------------------------------------
 else
 
