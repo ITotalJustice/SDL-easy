@@ -57,3 +57,4 @@ dkms.conf
 *.nro
 *.elf
 *.nacp
+/out
