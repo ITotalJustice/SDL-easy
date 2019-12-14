@@ -68,16 +68,17 @@ SDL_Window *SDL_GetWindow(void)
 
 void SDL_ImageLoad(SDL_Texture **texture, const char *path)
 {
-	SDL_Surface *Surface = IMG_Load(path);
-    SDL_ConvertSurfaceFormat(Surface, SDL_PIXELFORMAT_RGBA8888, 0);
-    *texture = SDL_CreateTextureFromSurface(main_renderer, Surface);
-	SDL_FreeSurface(Surface);
+	SDL_Surface *surface = IMG_Load(path);
+    SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA8888, 0);
+    *texture = SDL_CreateTextureFromSurface(main_renderer, surface);
+	SDL_FreeSurface(surface);
 }
 
 void SDL_ImageLoadMem(SDL_Texture **texture, void *data, int size)
 {
 	SDL_Surface *surface = IMG_Load_RW(SDL_RWFromMem(data, size), 1);
-	if (surface) *texture = SDL_CreateTextureFromSurface(main_renderer, surface);
+    SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA8888, 0);
+    *texture = SDL_CreateTextureFromSurface(main_renderer, surface);
 	SDL_FreeSurface(surface);
 }
 
@@ -90,7 +91,7 @@ void SDL_DrawText(TTF_Font *font, int x, int y, Colour colour, const char *text,
     va_end(argv);
 
     SDL_Colour col = SDL_GetColour(colour);
-    SDL_Surface *Surface = TTF_RenderText_Blended_Wrapped(font, textBuffer, col, SCREEN_W);
+    SDL_Surface *Surface = TTF_RenderUTF8_Blended_Wrapped(font, textBuffer, col, SCREEN_W);
     SDL_Texture *Tex = SDL_CreateTextureFromSurface(main_renderer, Surface);
     SDL_Rect pos = { pos.x = x, pos.y = y, pos.w = Surface ->w, pos.h = Surface->h };
 
@@ -284,7 +285,7 @@ void SDL_EasyExit(void)
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();
-    
+
     plExit();
     romfsExit();
 }
