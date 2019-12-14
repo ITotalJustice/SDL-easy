@@ -48,12 +48,13 @@ SDL_Colour colours[] =
     { 75, 0, 130 },             //indigo
     { 245, 245, 220 },          //beige
     { 45, 45, 45 },             //n_black
-    { 48, 48, 48 },             //n_light_black
+    { 50, 50, 50 },             //n_light_black
     { 128, 128, 128 },          //n_silver
     { 77, 77, 77 },             //n_grey
     { 251, 251, 251 },          //n_white
-    { 0, 255, 200 }             //n_cyan
-};
+    { 0, 255, 200 },            //n_cyan
+    { 143, 253, 252 },          //n_teal
+    { 36, 141, 199 }            //n_blue
 
 
 SDL_Colour SDL_GetColour(Colour colour_option)

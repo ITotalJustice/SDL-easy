@@ -51,7 +51,9 @@ typedef enum
     Colour_Nintendo_Silver,
     Colour_Nintendo_Grey,
     Colour_Nintendo_White,
-    Colour_Nintendo_Cyan
+    Colour_Nintendo_Cyan,
+    Colour_Nintendo_Teal,
+    Colour_Nintendo_Blue
 } Colour;
 
 typedef enum
