@@ -2,4 +2,4 @@
 
 hello world example using sdl-easy.
 
-![Img](../images/hello-world.jpg)
+![Img](../../images/hello-world.jpg)
