@@ -125,19 +125,19 @@ void shape_dump(shape_t *shape)
         input_t k;
         poll_input(&k);
 
-        SDL_ClearRenderer();
+        SDL_EasyClearRenderer();
 
-        SDL_DrawShape(Colour_Nintendo_Black, 0, 0, SCREEN_W, SCREEN_H);
-        SDL_DrawText(fntSmall, 100, 50, Colour_Nintendo_White, "Debug Shape Dump:");
+        SDL_EasyDrawShape(Colour_Nintendo_Black, 0, 0, SCREEN_W, SCREEN_H);
+        SDL_EasyDrawText(fntSmall, 100, 50, Colour_Nintendo_White, "Debug Shape Dump:");
 
-        SDL_DrawText(fntSmall, 125, 150, Colour_Nintendo_Cyan, "x = %d", shape->x);
-        SDL_DrawText(fntSmall, 125, 250, Colour_Nintendo_Cyan, "y = %d", shape->y);
-        SDL_DrawText(fntSmall, 125, 350, Colour_Nintendo_Cyan, "w = %d", shape->w);
-        SDL_DrawText(fntSmall, 125, 450, Colour_Nintendo_Cyan, "h = %d", shape->h);
-        SDL_Colour colour = SDL_GetColour(shape->colour);
-        SDL_DrawText(fntSmall, 125, 550, Colour_Nintendo_Cyan, "colour: r = %u g = %u b = %u a = %u", colour.r, colour.g, colour.b, colour.a);
+        SDL_EasyDrawText(fntSmall, 125, 150, Colour_Nintendo_Cyan, "x = %d", shape->x);
+        SDL_EasyDrawText(fntSmall, 125, 250, Colour_Nintendo_Cyan, "y = %d", shape->y);
+        SDL_EasyDrawText(fntSmall, 125, 350, Colour_Nintendo_Cyan, "w = %d", shape->w);
+        SDL_EasyDrawText(fntSmall, 125, 450, Colour_Nintendo_Cyan, "h = %d", shape->h);
+        SDL_Colour colour = SDL_EasyGetColour(shape->colour);
+        SDL_EasyDrawText(fntSmall, 125, 550, Colour_Nintendo_Cyan, "colour: r = %u g = %u b = %u a = %u", colour.r, colour.g, colour.b, colour.a);
 
-        SDL_UpdateRenderer();
+        SDL_EasyUpdateRenderer();
 
         if (k.down & KEY_B || k.down & KEY_PLUS)
             break;
@@ -147,8 +147,8 @@ void shape_dump(shape_t *shape)
 
 void render_shape(shape_t *shape)
 {
-    SDL_ClearRenderer();
-    SDL_DrawShape(Colour_Nintendo_Black, 0, 0, SCREEN_W, SCREEN_H);
+    SDL_EasyClearRenderer();
+    SDL_EasyDrawShape(Colour_Nintendo_Black, 0, 0, SCREEN_W, SCREEN_H);
 
     int w_remainder = 0;
     int h_renainder = 0;
@@ -159,10 +159,10 @@ void render_shape(shape_t *shape)
         h_renainder = SCREEN_W - (shape->y + shape->h);
 
     if (w_remainder || h_renainder)
-        SDL_DrawShape(shape->colour, 0, 0, w_remainder, h_renainder);
+        SDL_EasyDrawShape(shape->colour, 0, 0, w_remainder, h_renainder);
 
-    SDL_DrawShape(shape->colour, shape->x, shape->y, shape->w, shape->h);
-    SDL_UpdateRenderer();
+    SDL_EasyDrawShape(shape->colour, shape->x, shape->y, shape->w, shape->h);
+    SDL_EasyUpdateRenderer();
 }
 
 

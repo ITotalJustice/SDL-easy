@@ -87,39 +87,39 @@ TTF_Font *fntSmall, *fntMedium, *fntLarge, *fntButton, *fntButtonBig;
 SDL_Texture *example;
 
 
-SDL_Colour SDL_GetColour(Colour colour_option);                                         //pass the name of colour, returns the colour
-SDL_Window* SDL_GetWindow(void);                                                        //get sdl window
+SDL_Colour SDL_Easy_GetColour(Colour colour_option);                                         //pass the name of colour, returns the colour
+SDL_Window* SDL_EasyGetWindow(void);                                                        //get sdl window
 
-void SDL_ImageLoad(SDL_Texture **texture, const char *path);                            //load image from texture
-void SDL_ImageLoadMem(SDL_Texture **texture, void *data, int size);                     //load image from memory
+void SDL_EasyImageLoad(SDL_Texture **texture, const char *path);                            //load image from texture
+void SDL_EasyImageLoadMem(SDL_Texture **texture, void *data, int size);                     //load image from memory
 
-void SDL_DrawText(TTF_Font *font, int x, int y, Colour colour, const char *text, ...);  //draw text to screen
-void SDL_DrawButton(TTF_Font *font, uint16_t btn, int x, int y, Colour colour);         //draw button to screen
-void SDL_DrawImage(SDL_Texture *texture, int x, int y);                                 //draw image to screen from texture
-void SDL_DrawImageRotate(SDL_Texture *texture, int x, int y, double rotate);
-void SDL_DrawImageScale(SDL_Texture *texture, int x, int y, int w, int h);              //scale the image drawn to screen
-void SDL_DrawShape(Colour colour, int x, int y, int w, int h);                          //draw shap (rect)
-void SDL_DrawShapeOutline(Colour colour, int x, int y, int w, int h);
-void SDL_DrawShapeRounded(Colour colour, int x, int y, int w, int h, int r);
-void SDL_DrawShapeRoundedOutline(Colour colour, int x, int y, int w, int h, int r);
-void SDL_DrawCircle(Colour colour, int x, int y, int r);
-void SDL_DrawCircleOutline(Colour colour, int x, int y, int r);
+void SDL_EasyDrawText(TTF_Font *font, int x, int y, Colour colour, const char *text, ...);  //draw text to screen
+void SDL_EasyDrawButton(TTF_Font *font, uint16_t btn, int x, int y, Colour colour);         //draw button to screen
+void SDL_EasyDrawImage(SDL_Texture *texture, int x, int y);                                 //draw image to screen from texture
+void SDL_EasyDrawImageRotate(SDL_Texture *texture, int x, int y, double rotate);
+void SDL_EasyDrawImageScale(SDL_Texture *texture, int x, int y, int w, int h);              //scale the image drawn to screen
+void SDL_EasyDrawShape(Colour colour, int x, int y, int w, int h);                          //draw shap (rect)
+void SDL_EasyDrawShapeOutline(Colour colour, int x, int y, int w, int h);
+void SDL_EasyDrawShapeRounded(Colour colour, int x, int y, int w, int h, int r);
+void SDL_EasyDrawShapeRoundedOutline(Colour colour, int x, int y, int w, int h, int r);
+void SDL_EasyDrawCircle(Colour colour, int x, int y, int r);
+void SDL_EasyDrawCircleOutline(Colour colour, int x, int y, int r);
 
-void SDL_ScreenShotToTexture(SDL_Texture **texture);
-void SDL_ScreenShotToFile(const char *save_path);
+void SDL_EasyScreenShotToTexture(SDL_Texture **texture);
+void SDL_EasyScreenShotToFile(const char *save_path);
 
-int SDL_GetTextureWidth(SDL_Texture *texture);
-int SDL_GetTextureHeight(SDL_Texture *texture);
+int SDL_EasyGetTextureWidth(SDL_Texture *texture);
+int SDL_EasyGetTextureHeight(SDL_Texture *texture);
 
-void SDL_LoadFonts(void);                                                               //load all fonts
-void SDL_CloseFonts(void);                                                              //close all loaded fonts
-void SDL_LoadTextures(void);                                                            //load all textures
-void SDL_DestroyTextures(void);                                                         //destroy all textures
+void SDL_EasyLoadFonts(void);                                                               //load all fonts
+void SDL_EasyCloseFonts(void);                                                              //close all loaded fonts
+void SDL_EasyLoadTextures(void);                                                            //load all textures
+void SDL_EasyDestroyTextures(void);                                                         //destroy all textures
 
-void SDL_ClearRenderer(void);                                                           //clear the screen
-void SDL_UpdateRenderer(void);                                                          //update the screen
+void SDL_EasyClearRenderer(void);                                                           //clear the screen
+void SDL_EasyUpdateRenderer(void);                                                          //update the screen
 
-void SDL_EasyInit();                                                                    //init all sdl stuff
-void SDL_EasyExit();                                                                    //clean and exit
+void SDL_EasyEasyInit();                                                                    //init all sdl stuff
+void SDL_EasyEasyExit();                                                                    //clean and exit
 
 #endif

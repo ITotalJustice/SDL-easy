@@ -8,13 +8,13 @@ int main(int arcg, char *argv[])
     SDL_EasyInit();
 
     // draw the background.
-    SDL_DrawShape(Colour_Nintendo_Black, 0, 0, SCREEN_W, SCREEN_H);
+    SDL_EasyDrawShape(Colour_Nintendo_Black, 0, 0, SCREEN_W, SCREEN_H);
 
     // draw "hello world!"
-    SDL_DrawText(fntMedium, 530, 300, Colour_Nintendo_White, "hello world!");
+    SDL_EasyDrawText(fntMedium, 530, 300, Colour_Nintendo_White, "hello world!");
 
     // refresh the screen.
-    SDL_UpdateRenderer();
+    SDL_EasyUpdateRenderer();
 
 
     // loop until you press B to exit.

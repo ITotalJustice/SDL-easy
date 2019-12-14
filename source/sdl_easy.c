@@ -58,17 +58,17 @@ SDL_Colour colours[] =
 };
 
 
-SDL_Colour SDL_GetColour(Colour colour_option)
+SDL_Colour SDL_EasyGetColour(Colour colour_option)
 {
     return colours[colour_option];
 }
 
-SDL_Window *SDL_GetWindow(void)
+SDL_Window *SDL_EasyGetWindow(void)
 {
     return main_window;
 }
 
-void SDL_ImageLoad(SDL_Texture **texture, const char *path)
+void SDL_EasyImageLoad(SDL_Texture **texture, const char *path)
 {
 	SDL_Surface *surface = IMG_Load(path);
     SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA8888, 0);
@@ -76,7 +76,7 @@ void SDL_ImageLoad(SDL_Texture **texture, const char *path)
 	SDL_FreeSurface(surface);
 }
 
-void SDL_ImageLoadMem(SDL_Texture **texture, void *data, int size)
+void SDL_EasyImageLoadMem(SDL_Texture **texture, void *data, int size)
 {
 	SDL_Surface *surface = IMG_Load_RW(SDL_RWFromMem(data, size), 1);
     SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA8888, 0);
@@ -84,7 +84,7 @@ void SDL_ImageLoadMem(SDL_Texture **texture, void *data, int size)
 	SDL_FreeSurface(surface);
 }
 
-void SDL_DrawText(TTF_Font *font, int x, int y, Colour colour, const char *text, ...)
+void SDL_EasyDrawText(TTF_Font *font, int x, int y, Colour colour, const char *text, ...)
 {
     char textBuffer[256];
     va_list argv;
@@ -92,7 +92,7 @@ void SDL_DrawText(TTF_Font *font, int x, int y, Colour colour, const char *text,
     vsnprintf(textBuffer, sizeof(textBuffer), text, argv);
     va_end(argv);
 
-    SDL_Colour col = SDL_GetColour(colour);
+    SDL_Colour col = SDL_EasyGetColour(colour);
     SDL_Surface *Surface = TTF_RenderUTF8_Blended_Wrapped(font, textBuffer, col, SCREEN_W);
     SDL_Texture *Tex = SDL_CreateTextureFromSurface(main_renderer, Surface);
     SDL_Rect pos = { pos.x = x, pos.y = y, pos.w = Surface ->w, pos.h = Surface->h };
@@ -102,9 +102,9 @@ void SDL_DrawText(TTF_Font *font, int x, int y, Colour colour, const char *text,
     SDL_FreeSurface(Surface);
 }
 
-void SDL_DrawButton(TTF_Font *font, uint16_t btn, int x, int y, Colour colour)
+void SDL_EasyDrawButton(TTF_Font *font, uint16_t btn, int x, int y, Colour colour)
 {
-    SDL_Colour col = SDL_GetColour(colour);
+    SDL_Colour col = SDL_EasyGetColour(colour);
     SDL_Surface *Surface = TTF_RenderGlyph_Blended(font, btn, col);
     SDL_Texture *Tex = SDL_CreateTextureFromSurface(main_renderer, Surface);
     SDL_Rect pos = { pos.x = x, pos.y = y, pos.w = Surface ->w, pos.h = Surface->h };
@@ -114,14 +114,14 @@ void SDL_DrawButton(TTF_Font *font, uint16_t btn, int x, int y, Colour colour)
     SDL_FreeSurface(Surface);
 }
 
-void SDL_DrawImage(SDL_Texture *texture, int x, int y)
+void SDL_EasyDrawImage(SDL_Texture *texture, int x, int y)
 {
     SDL_Rect pos = { pos.x = x, pos.y = y };
 	SDL_QueryTexture(texture, NULL, NULL, &pos.w, &pos.h);
 	SDL_RenderCopy(main_renderer, texture, NULL, &pos);
 }
 
-void SDL_DrawImageRotate(SDL_Texture *texture, int x, int y, double rotate)
+void SDL_EasyDrawImageRotate(SDL_Texture *texture, int x, int y, double rotate)
 {
     SDL_Rect pos;
     SDL_Point center;
@@ -139,51 +139,51 @@ void SDL_DrawImageRotate(SDL_Texture *texture, int x, int y, double rotate)
     SDL_RenderCopyEx(main_renderer, texture, NULL, &pos, rotate, &center, SDL_FLIP_NONE);
 }
 
-void SDL_DrawImageScale(SDL_Texture *texture, int x, int y, int w, int h)
+void SDL_EasyDrawImageScale(SDL_Texture *texture, int x, int y, int w, int h)
 {
     SDL_Rect pos = { pos.x = x, pos.y = y, pos.w = w, pos.h = h };
 	SDL_RenderCopy(main_renderer, texture, NULL, &pos);
 }
 
-void SDL_DrawShape(Colour colour, int x, int y, int w, int h)
+void SDL_EasyDrawShape(Colour colour, int x, int y, int w, int h)
 {
-    SDL_Colour col = SDL_GetColour(colour);
+    SDL_Colour col = SDL_EasyGetColour(colour);
     SDL_Rect pos = { pos.x = x, pos.y = y, pos.w = w, pos.h = h };
     SDL_SetRenderDrawColor(main_renderer, col.r, col.g, col.b, col.a);
     SDL_RenderFillRect(main_renderer, &pos);
 }
 
-void SDL_DrawShapeOutline(Colour colour, int x, int y, int w, int h)
+void SDL_EasyDrawShapeOutline(Colour colour, int x, int y, int w, int h)
 {
-    SDL_Colour col = SDL_GetColour(colour);
+    SDL_Colour col = SDL_EasyGetColour(colour);
     rectangleRGBA(main_renderer, x, y,x + w, y + h, col.r, col.g, col.b, 255);
 }
 
-void SDL_DrawShapeRounded(Colour colour, int x, int y, int w, int h, int r)
+void SDL_EasyDrawShapeRounded(Colour colour, int x, int y, int w, int h, int r)
 {
-    SDL_Colour col = SDL_GetColour(colour);
+    SDL_Colour col = SDL_EasyGetColour(colour);
     roundedBoxRGBA(main_renderer, x, y,x + w, y + h, r, col.r, col.g, col.b, 255);
 }
 
-void SDL_DrawShapeRoundedOutline(Colour colour, int x, int y, int w, int h, int r)
+void SDL_EasyDrawShapeRoundedOutline(Colour colour, int x, int y, int w, int h, int r)
 {
-    SDL_Colour col = SDL_GetColour(colour);
+    SDL_Colour col = SDL_EasyGetColour(colour);
     roundedRectangleRGBA(main_renderer, x, y,x + w, y + h, r, col.r, col.g, col.b, 255);
 }
 
-void SDL_DrawCircle(Colour colour, int x, int y, int r)
+void SDL_EasyDrawCircle(Colour colour, int x, int y, int r)
 {
-    SDL_Colour col = SDL_GetColour(colour);
+    SDL_Colour col = SDL_EasyGetColour(colour);
     filledCircleRGBA(main_renderer, x, y, r, col.r, col.g, col.b, 255);
 }
 
-void SDL_DrawCircleOutline(Colour colour, int x, int y, int r)
+void SDL_EasyDrawCircleOutline(Colour colour, int x, int y, int r)
 {
-    SDL_Colour col = SDL_GetColour(colour);
+    SDL_Colour col = SDL_EasyGetColour(colour);
     circleRGBA(main_renderer, x, y, r, col.r, col.g, col.b, 255);
 }
 
-void SDL_ScreenShotToTexture(SDL_Texture **texture)
+void SDL_EasyScreenShotToTexture(SDL_Texture **texture)
 {
     SDL_Surface *Surface = SDL_CreateRGBSurface(0, SCREEN_W, SCREEN_H, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
     SDL_RenderReadPixels(main_renderer, NULL, SDL_PIXELFORMAT_ARGB8888, Surface->pixels, Surface->pitch);
@@ -192,7 +192,7 @@ void SDL_ScreenShotToTexture(SDL_Texture **texture)
 	SDL_FreeSurface(Surface);
 }
 
-void SDL_ScreenShotToFile(const char *save_path)
+void SDL_EasyScreenShotToFile(const char *save_path)
 {
     SDL_Surface *Surface = SDL_CreateRGBSurface(0, SCREEN_W, SCREEN_H, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
     SDL_RenderReadPixels(main_renderer, NULL, SDL_PIXELFORMAT_ARGB8888, Surface->pixels, Surface->pitch);
@@ -200,21 +200,21 @@ void SDL_ScreenShotToFile(const char *save_path)
 	SDL_FreeSurface(Surface);
 }
 
-int SDL_GetTextureWidth(SDL_Texture *texture)
+int SDL_EasyGetTextureWidth(SDL_Texture *texture)
 {
     int w;
     SDL_QueryTexture(texture, NULL, NULL, &w, NULL);
     return w;
 }
 
-int SDL_GetTextureHeight(SDL_Texture *texture)
+int SDL_EasyGetTextureHeight(SDL_Texture *texture)
 {
     int h;
     SDL_QueryTexture(texture, NULL, NULL, NULL, &h);
     return h;
 }
 
-void SDL_LoadFonts()
+void SDL_EasyLoadFonts(void)
 {
     // Get the fonts from system
     PlFontData font;
@@ -238,22 +238,22 @@ void SDL_CloseFonts(void)
     TTF_CloseFont(fntButtonBig);
 }
 
-void SDL_LoadTextures(void)
+void SDL_EasyLoadTextures(void)
 {
-    //SDL_ImageLoad(&example, "romfs:/example.jpg");
+    //SDL_EasyImageLoad(&example, "romfs:/example.jpg");
 }
 
-void SDL_DestroyTextures(void)
+void SDL_EasyDestroyTextures(void)
 {
     //SDL_DestroyTexture(example);
 }
 
-void SDL_ClearRenderer(void)
+void SDL_EasyClearRenderer(void)
 {
     SDL_RenderClear(main_renderer);
 }
 
-void SDL_UpdateRenderer(void)
+void SDL_EasyUpdateRenderer(void)
 {
     SDL_RenderPresent(main_renderer);
 }
@@ -273,14 +273,14 @@ void SDL_EasyInit(void)
     plInitialize();
     romfsInit();
     
-    SDL_LoadFonts();
-    SDL_LoadTextures();
+    SDL_EasyLoadFonts();
+    SDL_EasyLoadTextures();
 }
 
 void SDL_EasyExit(void)
 {
-    SDL_CloseFonts();
-    SDL_DestroyTextures();
+    SDL_EasyCloseFonts();
+    SDL_EasyDestroyTextures();
     SDL_DestroyRenderer(main_renderer);
     SDL_DestroyWindow(main_window);
 
