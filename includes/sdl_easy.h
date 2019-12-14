@@ -103,8 +103,8 @@ void SDL_DrawShapeRoundedOutline(Colour colour, int x, int y, int w, int h, int 
 void SDL_DrawCircle(Colour colour, int x, int y, int r);
 void SDL_DrawCircleOutline(Colour colour, int x, int y, int r);
 
-void SDL_ScreenShot(SDL_Texture **texture);
-void SDL_ScreenShotSave(SDL_Texture **texture, const char *save_path);
+void SDL_ScreenShotToTexture(SDL_Texture **texture);
+void SDL_ScreenShotToFile(const char *save_path);
 
 int SDL_GetTextureWidth(SDL_Texture *texture);
 int SDL_GetTextureHeight(SDL_Texture *texture);

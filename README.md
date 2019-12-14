@@ -6,7 +6,17 @@ It's SDL, but made even easier! A sdl wrapper library for the Nintendo Switch.
 
 ## How to build
 
-todo
+Install the Devkitpro tool chain from [here](https://devkitpro.org/wiki/Getting_Started).
+
+Using pacman (installed with devkitpro) install the following libraries:
+
+* switch-freetype
+* switch-sdl2
+* switch-sdl2_gfx
+* switch-sdl2_image
+* switch-sdl2_ttf
+
+If you have any problems building, feel free to open an issue including any build errors.
 
 ----
 

@@ -181,7 +181,7 @@ void SDL_DrawCircleOutline(Colour colour, int x, int y, int r)
     circleRGBA(main_renderer, x, y, r, col.r, col.g, col.b, 255);
 }
 
-void SDL_ScreenShot(SDL_Texture **texture)
+void SDL_ScreenShotToTexture(SDL_Texture **texture)
 {
     SDL_Surface *Surface = SDL_CreateRGBSurface(0, SCREEN_W, SCREEN_H, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
     SDL_RenderReadPixels(main_renderer, NULL, SDL_PIXELFORMAT_ARGB8888, Surface->pixels, Surface->pitch);
@@ -190,7 +190,7 @@ void SDL_ScreenShot(SDL_Texture **texture)
 	SDL_FreeSurface(Surface);
 }
 
-void SDL_ScreenShotSave(SDL_Texture **texture, const char *save_path)
+void SDL_ScreenShotToFile(const char *save_path)
 {
     SDL_Surface *Surface = SDL_CreateRGBSurface(0, SCREEN_W, SCREEN_H, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
     SDL_RenderReadPixels(main_renderer, NULL, SDL_PIXELFORMAT_ARGB8888, Surface->pixels, Surface->pitch);
