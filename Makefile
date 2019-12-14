@@ -37,11 +37,8 @@ include $(DEVKITPRO)/libnx/switch_rules
 #   of a homebrew executable (.nro). This is intended to be used for sysmodules.
 #   NACP building is skipped as well.
 #---------------------------------------------------------------------------------
-APP_TITLE   :=	sdl_easy
-APP_AUTHOR  :=	TotalJustice
-APP_VERSION :=	0.0.1
 
-TARGET		:=	$(notdir $(CURDIR))
+TARGET		:=	sdl_easy
 BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
@@ -99,7 +96,7 @@ endif
 #---------------------------------------------------------------------------------
 
 export VPATH		:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) $(foreach dir,$(DATA),$(CURDIR)/$(dir))
-export OUTPUT       :=	$(CURDIR)/out/lib/lib$(APP_TITLE).a
+export OUTPUT       :=	$(CURDIR)/out/lib/lib$(TARGET).a
 export DEPSDIR      :=	$(CURDIR)/$(BUILD)
 export OFILES_BIN	:=	$(addsuffix .o,$(BINFILES))
 export OFILES_SRC	:=	$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)

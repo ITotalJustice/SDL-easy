@@ -55,6 +55,7 @@ SDL_Colour colours[] =
     { 0, 255, 200 },            //n_cyan
     { 143, 253, 252 },          //n_teal
     { 36, 141, 199 }            //n_blue
+};
 
 
 SDL_Colour SDL_GetColour(Colour colour_option)
