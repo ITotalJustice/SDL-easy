@@ -204,7 +204,7 @@ int SDL_GetTextureWidth(SDL_Texture *texture)
     return w;
 }
 
-int SDL_GetTextureHight(SDL_Texture *texture)
+int SDL_GetTextureHeight(SDL_Texture *texture)
 {
     int h;
     SDL_QueryTexture(texture, NULL, NULL, NULL, &h);
@@ -267,6 +267,9 @@ void SDL_EasyInit(void)
     // highest quality
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
 
+    plInitialize();
+    romfsInit();
+    
     SDL_LoadFonts();
     SDL_LoadTextures();
 }
@@ -281,4 +284,7 @@ void SDL_EasyExit(void)
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();
+    
+    plExit();
+    romfsExit();
 }

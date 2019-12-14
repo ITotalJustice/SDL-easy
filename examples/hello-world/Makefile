@@ -37,15 +37,15 @@ include $(DEVKITPRO)/libnx/switch_rules
 #   of a homebrew executable (.nro). This is intended to be used for sysmodules.
 #   NACP building is skipped as well.
 #---------------------------------------------------------------------------------
-APP_TITLE   :=	SDL easy
+APP_TITLE   :=	hello world
 APP_AUTHOR  :=	TotalJustice
 APP_VERSION :=	0.0.1
 
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	source
+SOURCES		:=	source ../../source
 DATA		:=	data
-INCLUDES	:=	includes
+INCLUDES	:=	includes ../../includes
 #ROMFS		:=	romfs
 
 #---------------------------------------------------------------------------------

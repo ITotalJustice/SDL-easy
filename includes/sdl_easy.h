@@ -107,7 +107,7 @@ void SDL_ScreenShot(SDL_Texture **texture);
 void SDL_ScreenShotSave(SDL_Texture **texture, const char *save_path);
 
 int SDL_GetTextureWidth(SDL_Texture *texture);
-int SDL_GetTextureHight(SDL_Texture *texture);
+int SDL_GetTextureHeight(SDL_Texture *texture);
 
 void SDL_LoadFonts(void);                                                               //load all fonts
 void SDL_CloseFonts(void);                                                              //close all loaded fonts
