@@ -107,7 +107,7 @@ void SDL_DrawButton(TTF_Font *font, uint16_t btn, int x, int y, Colour colour)
     SDL_Colour col = SDL_GetColour(colour);
     SDL_Surface *Surface = TTF_RenderGlyph_Blended(font, btn, col);
     SDL_Texture *Tex = SDL_CreateTextureFromSurface(main_renderer, Surface);
-    SDL_Rect pos = { pos.x = x, pos.y = y, pos.w = Surface ->w, pos.h = Surface->h };
+    SDL_Rect pos = { pos.x = x, pos.y = y, pos.w = Surface->w, pos.h = Surface->h };
 
     SDL_RenderCopy(main_renderer, Tex, NULL, &pos);
     SDL_DestroyTexture(Tex);
