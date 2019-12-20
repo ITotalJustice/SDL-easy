@@ -95,7 +95,7 @@ void SDL_DrawText(TTF_Font *font, int x, int y, Colour colour, const char *text,
     SDL_Colour col = SDL_GetColour(colour);
     SDL_Surface *Surface = TTF_RenderUTF8_Blended_Wrapped(font, textBuffer, col, SCREEN_W);
     SDL_Texture *Tex = SDL_CreateTextureFromSurface(main_renderer, Surface);
-    SDL_Rect pos = { pos.x = x, pos.y = y, pos.w = Surface ->w, pos.h = Surface->h };
+    SDL_Rect pos = { pos.x = x, pos.y = y, pos.w = Surface->w, pos.h = Surface->h };
 
     SDL_RenderCopy(main_renderer, Tex, NULL, &pos);
     SDL_DestroyTexture(Tex);
