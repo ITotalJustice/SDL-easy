@@ -16,8 +16,8 @@
 #include "sdl_easy.h"
 
 
-static SDL_Window   *main_window;
-static SDL_Renderer *main_renderer;
+SDL_Window   *main_window;
+SDL_Renderer *main_renderer;
 
 
 SDL_Colour colours[] =
